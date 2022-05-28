@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scan_app/pages/home.dart';
+import 'package:scan_app/pages/loginPage.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    // Editing Controllers
     final signUpLogo = CircleAvatar(
       radius: 102,
       backgroundColor: Colors.blue,
@@ -64,7 +67,7 @@ class _SignUpPageState extends State<SignUpPage> {
       onSaved: (value) {
         passwordController.text = value!;
       },
-      textInputAction: TextInputAction.done,
+      textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.key),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
@@ -89,7 +92,8 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
     final signUp = Material(
-      borderRadius: BorderRadius.circular(15),
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
       color: Colors.blue,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
@@ -109,6 +113,22 @@ class _SignUpPageState extends State<SignUpPage> {
     );
 
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.blue,
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+            );
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
