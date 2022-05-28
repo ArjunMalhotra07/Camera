@@ -10,16 +10,16 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController nameController = new TextEditingController();
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
-  final TextEditingController cpasswordController = new TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController cpasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
     // Editing Controllers
-    final signUpLogo = CircleAvatar(
+    const signUpLogo = CircleAvatar(
       radius: 102,
       backgroundColor: Colors.blue,
       child: CircleAvatar(
@@ -37,8 +37,8 @@ class _SignUpPageState extends State<SignUpPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.person),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.person),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Name",
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
@@ -53,8 +53,8 @@ class _SignUpPageState extends State<SignUpPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.email_rounded),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.email_rounded),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Email",
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
@@ -69,8 +69,8 @@ class _SignUpPageState extends State<SignUpPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.key),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.key),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Passcode",
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
@@ -85,8 +85,8 @@ class _SignUpPageState extends State<SignUpPage> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.key),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.key),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Confirm Passcode",
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
@@ -96,7 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.blue,
       child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           Navigator.push(
@@ -104,7 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
             MaterialPageRoute(builder: (context) => const HomePage()),
           );
         },
-        child: Text(
+        child: const Text(
           'Sign Up',
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white),
@@ -117,7 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.blue,
           ),
@@ -132,27 +132,25 @@ class _SignUpPageState extends State<SignUpPage> {
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Form(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    signUpLogo,
-                    const SizedBox(height: 40),
-                    nameField,
-                    const SizedBox(height: 40),
-                    emailField,
-                    const SizedBox(height: 40),
-                    passwordField,
-                    const SizedBox(height: 40),
-                    cpasswordField,
-                    const SizedBox(height: 40),
-                    signUp,
-                  ],
-                ),
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Form(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  signUpLogo,
+                  const SizedBox(height: 40),
+                  nameField,
+                  const SizedBox(height: 40),
+                  emailField,
+                  const SizedBox(height: 40),
+                  passwordField,
+                  const SizedBox(height: 40),
+                  cpasswordField,
+                  const SizedBox(height: 40),
+                  signUp,
+                ],
               ),
             ),
           ),

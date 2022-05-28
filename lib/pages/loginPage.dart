@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final logo = CircleAvatar(
+    const logo = CircleAvatar(
       radius: 105,
       backgroundColor: Colors.green,
       child: CircleAvatar(
@@ -48,8 +48,8 @@ class _LoginPageState extends State<LoginPage> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.mail),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.mail),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -73,8 +73,8 @@ class _LoginPageState extends State<LoginPage> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.key),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.key),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Passcode",
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                 fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
           )),
     );
-    final textOption = Text(
+    const textOption = Text(
       'Dont have an account?',
       textAlign: TextAlign.center,
       style: TextStyle(color: Colors.black),
@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
             MaterialPageRoute(builder: (context) => const SignUpPage()),
           );
         },
-        child: Text(
+        child: const Text(
           'Sign Up',
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.green),
@@ -124,10 +124,10 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            key: _formKey,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
               child: Form(
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
