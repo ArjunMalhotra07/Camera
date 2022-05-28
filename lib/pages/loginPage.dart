@@ -123,33 +123,31 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    logo,
-                    const SizedBox(height: 40),
-                    emailField,
-                    const SizedBox(height: 40),
-                    passwordField,
-                    const SizedBox(height: 40),
-                    signIn,
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        textOption,
-                        signUp,
-                      ],
-                    ),
-                  ],
-                ),
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  logo,
+                  const SizedBox(height: 40),
+                  emailField,
+                  const SizedBox(height: 40),
+                  passwordField,
+                  const SizedBox(height: 40),
+                  signIn,
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      textOption,
+                      signUp,
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
