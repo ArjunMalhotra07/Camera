@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.push(
+                Navigator.pushReplacement<void, void>(
                   context,
                   MaterialPageRoute(builder: (context) => const HomePage()),
                 ),
