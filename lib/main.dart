@@ -1,6 +1,6 @@
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:scan_app/pages/home.dart';
 import 'package:scan_app/routes/routes.dart';
 import 'package:scan_app/pages/loginPage.dart';
@@ -13,7 +13,16 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // FirebaseAuth _auth = FirebaseAuth.instance;
+  final storage = const FlutterSecureStorage();
+  Future<bool> checkLoginStatus() async {
+    String? value = await storage.read(key: "uid");
+    if (value == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,7 +36,26 @@ class MyApp extends StatelessWidget {
         MyRoutes.loginRoute: (context) => const LoginPage(),
         MyRoutes.signUpRoute: (context) => const SignUpPage(),
       },
-      initialRoute: MyRoutes.loginRoute,
+      debugShowCheckedModeBanner: false,
+      // initialRoute: MyRoutes.loginRoute,
+      home: FutureBuilder(
+        future: checkLoginStatus(),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.data == false) {
+            return const LoginPage();
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+              color: Colors.white,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else {
+            return const HomePage();
+          }
+        },
+      ),
     );
   }
 }

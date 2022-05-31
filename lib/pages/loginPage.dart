@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scan_app/pages/home.dart';
 import 'package:scan_app/pages/signUp.dart';
@@ -12,7 +14,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // bool _validator = false;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -158,7 +159,12 @@ class _LoginPageState extends State<LoginPage> {
 
   //login function
   void logIn(String email, String password) async {
+    const storage = FlutterSecureStorage();
     if (_formKey.currentState!.validate()) {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      // print(userCredential.user?.uid);
+      await storage.write(key: "uid", value: userCredential.user?.uid);
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
