@@ -1,27 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:scan_app/pages/home.dart';
+import 'package:scan_app/pages/home_page.dart';
 import 'package:scan_app/routes/routes.dart';
-import 'package:scan_app/pages/loginPage.dart';
-import 'package:scan_app/pages/signUp.dart';
+import 'package:scan_app/pages/login_page.dart';
+import 'package:scan_app/utils/custom_firebase_auth.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp(key: Key('MyApp')));
 }
 
 class MyApp extends StatelessWidget {
-  final storage = const FlutterSecureStorage();
-  Future<bool> checkLoginStatus() async {
-    String? value = await storage.read(key: "uid");
-    if (value == null) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +22,10 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-      routes: {
-        MyRoutes.homeRoute: (context) => const HomePage(),
-        MyRoutes.loginRoute: (context) => const LoginPage(),
-        MyRoutes.signUpRoute: (context) => const SignUpPage(),
-      },
+      routes: MyRoutes.routes,
       debugShowCheckedModeBanner: false,
-      // initialRoute: MyRoutes.loginRoute,
       home: FutureBuilder(
-        future: checkLoginStatus(),
+        future: CustomFirebaseAuth.checkLoginStatus(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.data == false) {
             return const LoginPage();
