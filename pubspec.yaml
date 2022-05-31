@@ -35,9 +35,11 @@ dependencies:
   flutter:
     sdk: flutter
   fluttertoast: ^8.0.9
-  # image_picker: ^0.8.5+3
-  # path: ^1.8.2
-  # path_provider: ^2.0.10
+  get: ^4.6.5
+  image_picker: ^0.8.5+3
+  path: ^1.8.1
+  path_provider: ^2.0.10
+  provider: null
 
 dev_dependencies:
   flutter_lints: ^1.0.0

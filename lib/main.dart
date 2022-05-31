@@ -1,3 +1,4 @@
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:scan_app/pages/home.dart';
@@ -12,6 +13,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  // FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,12 +22,12 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-      initialRoute: MyRoutes.loginRoute,
       routes: {
         MyRoutes.homeRoute: (context) => const HomePage(),
         MyRoutes.loginRoute: (context) => const LoginPage(),
         MyRoutes.signUpRoute: (context) => const SignUpPage(),
       },
+      initialRoute: MyRoutes.loginRoute,
     );
   }
 }

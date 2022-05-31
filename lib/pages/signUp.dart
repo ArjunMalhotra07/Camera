@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scan_app/model/user_model.dart';
@@ -212,12 +211,10 @@ class _SignUpPageState extends State<SignUpPage> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
     UserModel userModel = UserModel();
-
     // Writing all the values
     userModel.uid = user!.uid;
     userModel.name = nameController.text;
     userModel.email = user.email;
-
     await firebaseFirestore
         .collection("users")
         .doc(user.uid)
