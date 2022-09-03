@@ -38,6 +38,8 @@ class _EditPictureState extends State<EditPicture> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -46,39 +48,61 @@ class _EditPictureState extends State<EditPicture> {
         foregroundColor: Colors.black,
         backgroundColor: Colors.blue,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            edit = !edit;
-          });
-          // getimageditor();
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => DownloadEditedPicture()),
-          // );
-        },
-        backgroundColor: Colors.blue,
-        child: Icon(Icons.edit),
+      body: Stack(
+        children: [
+          Center(
+              child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 5.0, bottom: 0, left: 20, right: 20),
+                  child: Expanded(
+                    child: SizedBox(
+                      height: height * .7,
+                      width: 400,
+                      child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                              filters[selectedIndex], BlendMode.color),
+                          child: Image.file(widget.pickedImage!)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                edit
+                    ? SizedBox(height: 200, child: colorPallette())
+                    : Container()
+              ],
+            ),
+          )),
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+                width * .8, edit ? height * .5 : height * .71, 10, 10),
+            child: Column(children: [
+              FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    Scrollable.ensureVisible(context);
+                    edit = !edit;
+                  });
+                },
+                backgroundColor: Colors.blue,
+                child: edit ? Icon(Icons.check) : Icon(Icons.edit),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              FloatingActionButton(
+                onPressed: () {},
+                backgroundColor: Colors.blue,
+                child: Icon(Icons.download),
+              ),
+            ]),
+          )
+        ],
       ),
-      body: Center(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 20.0, bottom: 10, left: 20, right: 20),
-              child: ColorFiltered(
-                  colorFilter:
-                      ColorFilter.mode(filters[selectedIndex], BlendMode.color),
-                  child: Image.file(widget.pickedImage!)),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            edit ? SizedBox(height: 200, child: colorPallette()) : Container()
-          ],
-        ),
-      )),
     );
   }
 
@@ -101,13 +125,16 @@ class _EditPictureState extends State<EditPicture> {
                   selectedIndex = index;
                 });
               },
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: filters[index]),
-                  color: filters[index],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: filters[index]),
+                    color: filters[index],
+                  ),
+                  height: 40,
+                  width: 40,
                 ),
-                height: 40,
-                width: 40,
               ));
         },
       ),
