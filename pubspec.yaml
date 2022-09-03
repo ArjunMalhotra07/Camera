@@ -37,10 +37,12 @@ dependencies:
     sdk: flutter
   flutter_secure_storage: ^5.0.2
   fluttertoast: ^8.0.9
+  gallery_saver: ^2.3.2
   get: ^4.6.5
   image_picker: ^0.8.5+3
   path: ^1.8.1
   path_provider: ^2.0.10
+  permission_handler: ^8.2.5
   provider: null
 
 dev_dependencies:

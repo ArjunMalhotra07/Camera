@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:scan_app/pages/editPicture.dart';
 import 'package:scan_app/pages/login_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,13 +18,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final storage = const FlutterSecureStorage();
+  var _timer;
   File? pickedImage;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Center(child: const Text("Filter.It")),
+        title: Center(child: const Text("Home")),
         foregroundColor: Colors.black,
         backgroundColor: Colors.blue,
       ),
@@ -64,51 +68,115 @@ class _HomePageState extends State<HomePage> {
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Material(
-                      elevation: 5,
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.blue,
-                      child: MaterialButton(
-                          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                          onPressed: () {
-                            pickImage(ImageSource.camera);
-                          },
-                          child: const Icon(Icons.camera_alt_outlined)),
+                    GestureDetector(
+                      onTap: () {
+                        pickImage(ImageSource.camera);
+                      },
+                      child: Container(
+                          height: 50,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.blueAccent,
+                                blurRadius: 12.0,
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: const Icon(Icons.camera_alt_outlined),
+                          )),
                     ),
                     const SizedBox(width: 40),
-                    Material(
-                      elevation: 5,
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.blue,
-                      child: MaterialButton(
-                          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                          onPressed: () {
-                            pickImage(ImageSource.gallery);
-                          },
-                          child: const Icon(Icons.browse_gallery)),
+                    GestureDetector(
+                      onTap: () {
+                        pickImage(ImageSource.gallery);
+                      },
+                      child: Container(
+                          height: 50,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.blueAccent,
+                                blurRadius: 12.0,
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: const Icon(Icons.photo_album_outlined),
+                          )),
                     ),
                   ],
                 ),
                 const SizedBox(height: 40),
                 Container(
                   child: pickedImage != null
-                      ? Container(
-                          height: 300,
-                          width: 300,
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: Image.file(pickedImage!),
+                      ? CircleAvatar(
+                          radius: 200,
+                          backgroundColor: Colors.blue,
+                          child: CircleAvatar(
+                            backgroundImage: FileImage(pickedImage!),
+                            radius: 198,
                           ),
                         )
                       : const CircleAvatar(
-                          radius: 102,
+                          radius: 200,
                           backgroundColor: Colors.blue,
                           child: CircleAvatar(
                             backgroundImage: AssetImage('assets/camera.png'),
-                            radius: 100,
+                            radius: 198,
                           ),
                         ),
+                ),
+                const SizedBox(height: 40),
+                GestureDetector(
+                  onTap: () {
+                    if (pickedImage == null) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AlertDialog(
+                              content: Padding(
+                                  padding: EdgeInsets.only(left: 25),
+                                  child: Text("Please Select an Image")),
+                            );
+                          });
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditPicture(
+                                  pickedImage: pickedImage,
+                                )),
+                      );
+                    }
+                  },
+                  child: Container(
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.blueAccent,
+                            blurRadius: 12.0,
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: const Text(
+                          "Edit",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      )),
                 ),
               ],
             ),
@@ -125,9 +193,8 @@ class _HomePageState extends State<HomePage> {
       final tempImage = File(photo.path);
       setState(() {
         pickedImage = tempImage;
+        print("$pickedImage");
       });
-
-      Get.back();
     } catch (error) {
       debugPrint(error.toString());
     }
