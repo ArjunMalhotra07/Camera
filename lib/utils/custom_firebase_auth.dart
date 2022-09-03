@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scan_app/model/user_model.dart';
+import 'package:firestore_search/firestore_search.dart';
 
 class CustomFirebaseAuth {
   static final _auth = FirebaseAuth.instance;
@@ -17,12 +18,13 @@ class CustomFirebaseAuth {
     });
   }
 
-  static Future<bool> checkLoginStatus() async {
+  static Future<String?> checkLoginStatus() async {
     String? value = await _storage.read(key: "uid");
     if (value == null) {
-      return false;
+      return " ";
     } else {
-      return true;
+      Future<String?> name = _storage.read(key: "name");
+      return name;
     }
   }
 

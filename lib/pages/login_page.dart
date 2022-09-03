@@ -64,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
         if (!regex.hasMatch(value)) {
           return ("Minimum of six characters Required");
         }
+        return null;
       },
       onSaved: (value) {
         passwordController.text = value!;

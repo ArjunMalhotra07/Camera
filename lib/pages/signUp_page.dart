@@ -91,6 +91,7 @@ class _SignUpPageState extends State<SignUpPage> {
         if (!regex.hasMatch(value)) {
           return ("Minimum 6 characters Required");
         }
+        return null;
       },
       onSaved: (value) {
         passwordController.text = value!;

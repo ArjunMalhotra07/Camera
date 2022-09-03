@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
         future: CustomFirebaseAuth.checkLoginStatus(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.data == false) {
+        builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+          if (snapshot.data == "") {
             return const LoginPage();
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
