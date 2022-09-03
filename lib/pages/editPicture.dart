@@ -1,8 +1,9 @@
 // import 'package:camera_deep_ar/camera_deep_ar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'dart:io';
 
-import 'package:scan_app/pages/testPage.dart';
+import 'package:scan_app/pages/downloadPic.dart';
 
 // import 'config.dart';
 
@@ -20,92 +21,20 @@ class EditPicture extends StatefulWidget {
 }
 
 class _EditPictureState extends State<EditPicture> {
-  // late CameraDeepArController _controller;
-  // final deepArController = CameraDeepArController(config);
-  String _platformVersion = 'Unknown';
-  bool isRecording = false;
-  // CameraMode cameraMode = config.cameraMode;
-  // DisplayMode displayMode = config.displayMode;
-  int currentEffect = 0;
-
-  // List get effectList {
-  // switch (cameraMode) {
-  //   case CameraMode.mask:
-  //     return masks;
-
-  //   case CameraMode.effect:
-  //     return effects;
-
-  //   case CameraMode.filter:
-  //     return filters;
-
-  //   default:
-  //     return masks;
-  // }
-  // }
-
-  List masks = [
-    "none",
-    "assets/aviators",
-    "assets/bigmouth",
-    "assets/lion",
-    "assets/dalmatian",
-    "assets/bcgseg",
-    "assets/look2",
-    "assets/fatify",
-    "assets/flowers",
-    "assets/grumpycat",
-    "assets/koala",
-    "assets/mudmask",
-    "assets/obama",
-    "assets/pug",
-    "assets/slash",
-    "assets/sleepingmask",
-    "assets/smallface",
-    "assets/teddycigar",
-    "assets/tripleface",
-    "assets/twistedface",
-  ];
-  List effects = [
-    "none",
-    "assets/fire",
-    "assets/heart",
-    "assets/blizzard",
-    "assets/rain",
-  ];
+  int selectedIndex = 0;
+  bool edit = false;
   List filters = [
-    "none",
-    "assets/drawingmanga",
-    "assets/sepia",
-    "assets/bleachbypass",
-    "assets/realvhs",
-    "assets/filmcolorperfection"
+    Colors.transparent,
+    Colors.black54,
+    Colors.blue.shade300,
+    Colors.yellow.shade400,
+    Colors.orange,
+    Colors.pink.shade200,
+    Colors.green,
+    Colors.indigo,
+    Colors.grey,
+    Colors.red,
   ];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   CameraDeepArController.checkPermissions();
-  //   deepArController.setEventHandler(DeepArEventHandler(onCameraReady: (v) {
-  //     _platformVersion = "onCameraReady $v";
-  //     setState(() {});
-  //   }, onSnapPhotoCompleted: (v) {
-  //     _platformVersion = "onSnapPhotoCompleted $v";
-  //     setState(() {});
-  //   }, onVideoRecordingComplete: (v) {
-  //     _platformVersion = "onVideoRecordingComplete $v";
-  //     setState(() {});
-  //   }, onSwitchEffect: (v) {
-  //     _platformVersion = "onSwitchEffect $v";
-  //     setState(() {});
-  //   }));
-  // }
-
-  // @override
-  // void dispose() {
-  //   deepArController?.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -119,28 +48,69 @@ class _EditPictureState extends State<EditPicture> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          setState(() {
+            edit = !edit;
+          });
           // getimageditor();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => DownloadEditedPicture()),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => DownloadEditedPicture()),
+          // );
         },
         backgroundColor: Colors.blue,
         child: Icon(Icons.edit),
       ),
       body: Center(
-          child: Stack(
-        children: [
-          Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 20.0, bottom: 20, left: 20, right: 20),
-                child: Image.file(widget.pickedImage!),
-              )),
-        ],
+          child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 20.0, bottom: 10, left: 20, right: 20),
+              child: ColorFiltered(
+                  colorFilter:
+                      ColorFilter.mode(filters[selectedIndex], BlendMode.color),
+                  child: Image.file(widget.pickedImage!)),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            edit ? SizedBox(height: 200, child: colorPallette()) : Container()
+          ],
+        ),
       )),
+    );
+  }
+
+  Widget coloredContainer(int index) {
+    return Container(height: 50, width: 50, color: filters[index]);
+  }
+
+  Widget colorPallette() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 5,
+        ),
+        itemCount: filters.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedIndex = index;
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: filters[index]),
+                  color: filters[index],
+                ),
+                height: 40,
+                width: 40,
+              ));
+        },
+      ),
     );
   }
 }

@@ -39,6 +39,7 @@ dependencies:
   fluttertoast: ^8.0.9
   gallery_saver: ^2.3.2
   get: ^4.6.5
+  image: ^3.2.0
   image_picker: ^0.8.5+3
   path: ^1.8.1
   path_provider: ^2.0.10

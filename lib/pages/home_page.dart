@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Center(child: const Text("Home")),
+        title: Center(child: const Text("Add Picture")),
         foregroundColor: Colors.black,
         backgroundColor: Colors.blue,
       ),
