@@ -23,6 +23,7 @@ class EditPicture extends StatefulWidget {
 class _EditPictureState extends State<EditPicture> {
   int selectedIndex = 0;
   bool edit = false;
+  bool showColorPallete = false;
   List filters = [
     Colors.transparent,
     Colors.black54,
@@ -50,6 +51,7 @@ class _EditPictureState extends State<EditPicture> {
       ),
       body: Stack(
         children: [
+          // Picture and Color Pallete
           Center(
               child: SingleChildScrollView(
             child: Column(
@@ -71,20 +73,54 @@ class _EditPictureState extends State<EditPicture> {
                 SizedBox(
                   height: 10,
                 ),
-                edit
+                showColorPallete
                     ? SizedBox(height: 200, child: colorPallette())
                     : Container()
               ],
             ),
           )),
+          // Floating Action Buttons
           Padding(
             padding: EdgeInsets.fromLTRB(
-                width * .8, edit ? height * .5 : height * .71, 10, 10),
+                width * .8, edit ? height * .305 : height * .5, 10, 10),
             child: Column(children: [
+              edit
+                  ? FloatingActionButton(
+                      onPressed: () {},
+                      backgroundColor: Colors.blue,
+                      child: Text("AR"),
+                    )
+                  : Container(),
+              const SizedBox(
+                height: 10,
+              ),
+              edit
+                  ? FloatingActionButton(
+                      onPressed: () {},
+                      backgroundColor: Colors.blue,
+                      child: Icon(Icons.person),
+                    )
+                  : Container(),
+              const SizedBox(
+                height: 10,
+              ),
+              edit
+                  ? FloatingActionButton(
+                      onPressed: () {
+                        setState(() {
+                          showColorPallete = !showColorPallete;
+                        });
+                      },
+                      backgroundColor: Colors.blue,
+                      child: Icon(Icons.color_lens),
+                    )
+                  : Container(),
+              const SizedBox(
+                height: 10,
+              ),
               FloatingActionButton(
                 onPressed: () {
                   setState(() {
-                    Scrollable.ensureVisible(context);
                     edit = !edit;
                   });
                 },
